@@ -14,8 +14,26 @@ const path = require('path')  // we imported a module path
 const app = express()
 const port = 3000
 
+// to create our own middleware
+const darshanMiddleware=(req,res,next)=>{
+        console.log(req)
+        next() // if we create more than one middleware to run next one
+}
+
+// middleware => function jo req and res object ki access ko rakte hai and usko change kar sakte hai
+app.use(express.static(path.join(__dirname,"public")))
+// app.use(darshanMiddleware)
+
+
+
 app.get('/', (req, res) => {
 res.send('Hello World!')
+})
+
+let name="darshan"
+
+app.get('/hello/:name', (req, res) => {
+res.send('Hello World!'+req.params.name)
 })
 
 app.get('/about', (req, res) => {
